@@ -1,0 +1,138 @@
+vue cli - vue add vuetify - добавляет сразу vuetify в проект, меняет файлы. Быстрый способ подключить vuetify с нуля
+
+v-app - корневой тег, которым должно быть обмотано всё приложение ( в app.vue). Может быть где угодно, но этот тег должен быть только один в приложении
+
+v-toolbar - для хедера. проп app делает его fixed
+
+v-content - обмотка для контента
+
+//TEXT
+class="red" - устанавливает bg красный (цвета могут быть разные), а class="red--text" - устанавливает color; Например class="red white--text" - белый текст на красном фоне
+class="lighten-1" - немного осветляет bg, lighten-4 - значительно осветляет; Тоже самое с текстом: class="text--lighten-1" - осветляет текст. Тоже и с darken;
+class="ping lighten-2 red--text text--darken-2"
+
+class="display-4" - Используется для заголовков. Сильно увеличивает размер шрифта. display-1 - немного
+
+dark - prop меняющий цветовую гамму на темную. Также можно использовать для осветления текста
+
+<v-btn small> //small/large - отвчает за размер
+	<v-icon left small>iconName</v-icon> //left выравнивает по левому краю относительно кнопки//small/larg также отвечает за размер
+</v-btn> - вставляем иконку (все иконки из material desing - material.io)
+
+v-icon fab - можно сделать кпноку круглой, без текста
+
+//breakpoints
+система как в бутстрапе с xl-md-sm-xs и тд классами.
+Если хочу скрыть на мобилке, то класс hidden-xs
+Класс hidden-md-and-down - скрывает на разрешении md и ниже (xs тоже цепляет); -and-up скрывает всё, что выше
+
+//toolbar
+toolbar это как header сайта.
+prop "app" - делает его фиксированным
+вложенный тег v-toolbar-title - делает заголовок
+
+d-flex класс для обозначения флекса и justify-space-between для раскидывания дочерних элементов
+также есть v-spacer, который раскидывает элементы по ширине span v-spacer span = эффект тот же, что и от justify-space-between
+
+//navigation-drawer = aside
+v-navigation-drawer - aside, который выезжает, привязывается через v-model
+v-app-bar-nav-icon - генерит иконку с бургером
+
+//themes & colors
+как и в бутстрапе можно юзать success, primary, error, warning цвета (class="success"). Как разультат - бг будет окрашен в тот цвет, который надо. 
+Эти цвета можно переопределить
+
+//list
+<v-list nav> // нав для того, чтобы внутри можно было поставить :to
+<v-list-item-group>
+	<v-list-item v-for="item in items" :key="item.id"  exact :to="/pages">
+	<v-list-item-icon>
+		<v-icon >mdi-email</v-icon>
+	</v-list-item-icon>
+	<v-list-item-content>
+		{{item.id}}
+	</v-list-item-content>
+	</v-list-item>
+</v-list-item-group>
+</v-list>
+
+//margin-padding
+mt-4 - margin-top 5 - наибольшее значение 5; ma - margin во всех направлениях, mx - по оси x
+
+//grid system
+v-container - центрирует по центру, prop fluid - растягивает на всю ширину
+v-row - ряд,
+v-col - колонка, регулируется размер через пропсы sm="12", md="6". На маленьких на всю ширину, на больших на половину
+
+
+//V-CARD??
+используется для карточек
+v-card-actions обёртка для кнопок
+v-card-subtitle
+v-card-text - основной текстовый контет хранится тут
+v-card-title
+
+//v-tooltip
+сам "тег" v-tooltip окружает элемент на котором должен сработать tooltip
+<v-tooltip bottom> //bottom - с какой стороны будет тултип
+	<template v-slot:activator="{on}"> // активатор обязателен
+		<v-chip class="yellow black--text " v-on="on" > //активация активатора
+		blabla chip
+		</v-chip>
+	</template>
+
+	<span>Some tooltip text</span>
+</v-tooltip>
+обязательно должен быть активатор
+
+
+Также есть классы центрирования, например text-md-center (на больших экранах текст по центру)
+
+//v-avatar
+<v-avatar size="100">
+	<img src="blbalba">
+</v-avatar>
+
+//expansion-panel - аккордеон
+<v-expansion-panels>
+	<v-expansion-panel>
+		<v-expansion-panel-header>Heading</v-expansion-panel-header>
+		<v-expansion-panel-content class="purple white--text pt-3" >
+		<p class="mb-0">blabla</p>
+		</v-expansion-panel-content>
+	</v-expansion-panel>
+</v-expansion-panels>
+
+//v-menu типа выпадашка с дропдауном, используется для меняющий<v-menu offset-y>
+<v-menu offset-y> //offset-y используется, чтобы дропдаун не перекрывал кнопку
+	<template v-slot:activator="{ on }"> // при клике на кнопку выпадает содержимое v-list
+		<v-btn v-on="on"> Menu </v-btn>
+	</template>
+
+	<v-list>
+		<v-list-item v-for="item in items" :key="item.id" exact :to="item.path">
+			<v-list-item-title>{{item.path}}</v-list-item-title>
+		</v-list-item>
+	</v-list>
+</v-menu>
+
+
+//v-dialog - попап
+<v-dialog >
+	<template v-slot:activator="{on}">
+		<v-btn class="ml-2" v-on="on">Dialog(popup)</v-btn> //в ui видна только кнопка. При нажатии, показывается v-card
+	</template>
+	<v-card>
+		<v-card-title>
+			blblba
+		</v-card-title>
+	</v-card>
+</v-dialog>
+
+
+//text-field
+v-text-field - инпут
+
+попапы можно контрллировать с помощью v-slot:activator а также v-model
+<v-dialog v-model="dialog">
+</v-dialog>
